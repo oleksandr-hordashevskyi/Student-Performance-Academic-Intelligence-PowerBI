@@ -1,1 +1,41 @@
+// ==========================================
+// ACADEMIC PERFORMANCE & TIME INTELLIGENCE MEASURES
+// ==========================================
 
+// 1. Core Base Measure
+Average Grade = AVERAGE('grades'[grade_value])
+
+
+// 2. Month-over-Month Grade Variance (MoM%)
+Average Grade MoM% = 
+VAR PreviousMonthGrade = 
+    CALCULATE(
+        [Average Grade],
+        DATEADD('calendar'[Date], -1, MONTH)
+    )
+RETURN
+    DIVIDE([Average Grade] - PreviousMonthGrade, PreviousMonthGrade, 0)
+
+
+// 3. Year-to-Date (YTD) Performance Tracking
+Average Grade YTD = 
+CALCULATE(
+    [Average Grade],
+    DATESYTD('calendar'[Date])
+)
+
+
+// 4. Unfiltered Global Baseline Count (Filter Context Modification)
+Global Grades Count = 
+CALCULATE(
+    COUNTROWS('grades'),
+    ALL('grades')
+)
+
+
+// 5. Subject Specific Assessment Filter
+Exam Average Grade = 
+CALCULATE(
+    [Average Grade],
+    'grades'[grade_type] = "exam"
+)
