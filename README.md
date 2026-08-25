@@ -111,11 +111,20 @@ Student-Performance-Academic-Intelligence-PowerBI/
 
 ## 📈 Visualizations
 
-- Executive Academic Performance Overview
-- Class Performance & Negative Assessment Analysis
-- Analytics, Forecasting & Time Intelligence
-- Granular Class Details (Drill-Through Target)
-- Month-over-Month Detailed Metrics
+### Executive Academic Performance Overview
+![Academic Performance Overview](images/02_academic_performance_overview.png)
+
+### Class Performance & Negative Assessment Analysis
+![Class Performance Analysis](images/03_class_performance_analysis.png)
+
+### Analytics, Forecasting & Time Intelligence
+![Analytics & Time Intelligence](images/05_analytics_time_intelligence.png)
+
+### Granular Class Details (Drill-Through Target)
+![Class Details Drill-Through](images/04_class_details_drillthrough.png)
+
+### Month-over-Month Detailed Metrics
+![MoM Details](images/06_mom_grade_details.png)
 
 ---
 
