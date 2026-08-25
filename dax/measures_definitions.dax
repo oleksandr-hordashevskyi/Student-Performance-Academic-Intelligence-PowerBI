@@ -1,41 +1,103 @@
 // ==========================================
-// ACADEMIC PERFORMANCE & TIME INTELLIGENCE MEASURES
+// 1. BASE KPI MEASURES
 // ==========================================
 
-// 1. Core Base Measure
-Average Grade = AVERAGE('grades'[grade_value])
+Average Grade = 
+AVERAGE('grades'[grade_value])
+
+Total Grades = 
+COUNTROWS('grades')
 
 
-// 2. Month-over-Month Grade Variance (MoM%)
-Average Grade MoM% = 
-VAR PreviousMonthGrade = 
-    CALCULATE(
-        [Average Grade],
-        DATEADD('calendar'[Date], -1, MONTH)
-    )
-RETURN
-    DIVIDE([Average Grade] - PreviousMonthGrade, PreviousMonthGrade, 0)
+// ==========================================
+// 2. FILTER CONTEXT MANIPULATION (ALL / ALLEXCEPT)
+// ==========================================
 
-
-// 3. Year-to-Date (YTD) Performance Tracking
-Average Grade YTD = 
+// Ignores grade_type filter while respecting other slicers
+All Type Grades = 
 CALCULATE(
-    [Average Grade],
-    DATESYTD('calendar'[Date])
+    [Total Grades],
+    ALL('grades'[grade_type])
 )
 
-
-// 4. Unfiltered Global Baseline Count (Filter Context Modification)
+// Completely ignores all table filters (Global Benchmark)
 Global Grades Count = 
 CALCULATE(
     COUNTROWS('grades'),
     ALL('grades')
 )
 
-
-// 5. Subject Specific Assessment Filter
+// Assessment-specific baseline benchmarks
 Exam Average Grade = 
 CALCULATE(
     [Average Grade],
+    ALL('grades'[grade_type]),
     'grades'[grade_type] = "exam"
+)
+
+Homework Average Grade = 
+CALCULATE(
+    [Average Grade],
+    ALL('grades'[grade_type]),
+    'grades'[grade_type] = "homework"
+)
+
+Project Average Grade = 
+CALCULATE(
+    [Average Grade],
+    ALL('grades'[grade_type]),
+    'grades'[grade_type] = "project"
+)
+
+Quiz Average Grade = 
+CALCULATE(
+    [Average Grade],
+    ALL('grades'[grade_type]),
+    'grades'[grade_type] = "quiz"
+)
+
+Test Average Grade = 
+CALCULATE(
+    [Average Grade],
+    ALL('grades'[grade_type]),
+    'grades'[grade_type] = "test"
+)
+
+
+// ==========================================
+// 3. RISK ANALYSIS (NEGATIVE GRADES)
+// ==========================================
+
+// Count of grades below passing threshold (< 6) excluding blanks
+Negative Grades Count = 
+CALCULATE(
+    [Total Grades],
+    'grades'[grade_value] < 6,
+    NOT(ISBLANK('grades'[grade_value]))
+)
+
+// Proportion of negative ratings against filtered volume
+Negative Grades Proportion % = 
+DIVIDE([Negative Grades Count], [Total Grades], 0)
+
+
+// ==========================================
+// 4. TIME INTELLIGENCE & MOM DYNAMICS
+// ==========================================
+
+Previous Month Grade = 
+CALCULATE(
+    [Average Grade],
+    DATEADD('calendar'[Date], -1, MONTH)
+)
+
+Average Grade MoM% = 
+VAR PrevGrade = [Previous Month Grade]
+RETURN
+    DIVIDE([Average Grade] - PrevGrade, PrevGrade, 0)
+
+Average Grade YTD = 
+CALCULATE(
+    [Average Grade],
+    DATESYTD('calendar'[Date])
 )
