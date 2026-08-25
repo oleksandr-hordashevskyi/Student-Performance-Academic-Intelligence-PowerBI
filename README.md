@@ -132,5 +132,5 @@ Student-Performance-Academic-Intelligence-PowerBI/
 
 **Author:** Oleksandr Hordashevskyi
 
-- LinkedIn: [Oleksandr Hordashevskyi](https://www.linkedin.com/in/o-hordashevskyi/)
+- LinkedIn: [Oleksandr Hordashevskyi](www.linkedin.com/in/oleksandr-hordashevskyi)
 - Email: [o.hordashevskyi@gmail.com](mailto:o.hordashevskyi@gmail.com)
